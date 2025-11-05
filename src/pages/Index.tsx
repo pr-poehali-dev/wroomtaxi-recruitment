@@ -194,12 +194,12 @@ const Index = () => {
             </h1>
           </div>
           <Button 
-            size="lg" 
-            className="bg-primary hover:bg-primary/90 text-secondary"
+            className="bg-primary hover:bg-primary/90 text-secondary md:px-6"
             onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            <Icon name="FileText" className="mr-2" size={20} />
-            Submit Application
+            <Icon name="FileText" className="mr-1 md:mr-2" size={18} />
+            <span className="hidden sm:inline">Submit Application</span>
+            <span className="sm:hidden">Apply</span>
           </Button>
         </div>
       </header>
