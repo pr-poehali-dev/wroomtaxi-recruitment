@@ -4,11 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Icon from "@/components/ui/icon";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { toast } = useToast();
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -19,6 +20,16 @@ const Index = () => {
     hasOwnCar: "no",
     document: null as File | null
   });
+
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = 320;
+      carouselRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,8 +196,19 @@ const Index = () => {
           <p className="text-center text-muted-foreground mb-12 text-lg">
             Choose a vehicle that suits your preferences
           </p>
-          <div className="relative">
-            <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+          <div className="relative px-12">
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-primary hover:text-white shadow-lg"
+              onClick={() => scrollCarousel('left')}
+            >
+              <Icon name="ChevronLeft" size={24} />
+            </Button>
+            <div 
+              ref={carouselRef}
+              className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+            >
               {cars.map((car, index) => (
                 <Card key={index} className="min-w-[300px] snap-center hover:shadow-xl transition-all">
                   <CardContent className="p-0">
@@ -202,6 +224,14 @@ const Index = () => {
                 </Card>
               ))}
             </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-primary hover:text-white shadow-lg"
+              onClick={() => scrollCarousel('right')}
+            >
+              <Icon name="ChevronRight" size={24} />
+            </Button>
           </div>
         </div>
       </section>
