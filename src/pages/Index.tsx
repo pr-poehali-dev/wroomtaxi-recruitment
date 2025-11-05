@@ -126,6 +126,9 @@ const Index = () => {
                 Earn up to ₹50,000 per month with flexible working hours. 
                 Start today!
               </p>
+              <p className="text-lg font-bold text-white mt-4">
+                Submit your application and our operator will contact you within 2 hours
+              </p>
               <Button 
                 size="lg" 
                 className="bg-primary hover:bg-primary/90 text-secondary text-lg px-8 py-6"
@@ -315,12 +318,14 @@ const Index = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="document">Passport Scan *</Label>
+                  <Label htmlFor="document">Driver's License *</Label>
+                  <p className="text-sm text-muted-foreground mb-2">Please upload photos of both sides (front and back)</p>
                   <Input 
                     id="document" 
                     type="file" 
                     accept="image/*,.pdf" 
                     required 
+                    multiple
                     onChange={(e) => setFormData({...formData, document: e.target.files?.[0] || null})}
                     className="border-primary/30 focus:border-primary"
                   />
