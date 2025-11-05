@@ -126,9 +126,6 @@ const Index = () => {
                 Earn up to ₹50,000 per month with flexible working hours. 
                 Start today!
               </p>
-              <p className="text-lg font-bold text-white mt-4">
-                Submit your application and our operator will contact you within 2 hours
-              </p>
               <Button 
                 size="lg" 
                 className="bg-primary hover:bg-primary/90 text-secondary text-lg px-8 py-6"
@@ -145,6 +142,11 @@ const Index = () => {
                 className="rounded-2xl shadow-2xl"
               />
             </div>
+          </div>
+          <div className="mt-12 text-center">
+            <p className="text-2xl md:text-3xl font-bold text-white">
+              Submit your application and our operator will contact you within 2 hours
+            </p>
           </div>
         </div>
       </section>
