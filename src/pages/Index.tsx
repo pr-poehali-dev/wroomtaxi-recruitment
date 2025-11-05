@@ -109,8 +109,8 @@ const Index = () => {
             className="bg-primary hover:bg-primary/90 text-secondary"
             onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            <Icon name="Phone" className="mr-2" size={20} />
-            Call Us
+            <Icon name="FileText" className="mr-2" size={20} />
+            Submit Application
           </Button>
         </div>
       </header>
