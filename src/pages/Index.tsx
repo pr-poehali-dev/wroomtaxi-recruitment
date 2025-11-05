@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 const Index = () => {
   const { toast } = useToast();
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -91,27 +92,7 @@ const Index = () => {
       const data = await response.json();
       
       if (response.ok && data.success) {
-        toast({
-          title: "Application submitted!",
-          description: "We will contact you shortly.",
-        });
-        
-        setFormData({
-          firstName: "",
-          lastName: "",
-          middleName: "",
-          phone: "",
-          email: "",
-          age: "",
-          hasOwnCar: "no",
-          licenseFront: null,
-          licenseBack: null
-        });
-        
-        const frontInput = document.getElementById('licenseFront') as HTMLInputElement;
-        const backInput = document.getElementById('licenseBack') as HTMLInputElement;
-        if (frontInput) frontInput.value = '';
-        if (backInput) backInput.value = '';
+        setIsSubmitted(true);
       } else {
         toast({
           title: "Error",
@@ -343,13 +324,46 @@ const Index = () => {
         <div className="container mx-auto px-4 max-w-2xl">
           <Card className="shadow-2xl border-primary/20">
             <CardContent className="pt-6">
-              <h3 className="text-3xl font-bold text-center mb-2 text-secondary">
-                Driver Application Form
-              </h3>
-              <p className="text-center text-muted-foreground mb-8">
-                Fill out the form and we will contact you within 2 hours
-              </p>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              {isSubmitted ? (
+                <div className="py-12 text-center space-y-6">
+                  <div className="w-24 h-24 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
+                    <Icon name="CheckCircle2" className="text-primary" size={64} />
+                  </div>
+                  <h3 className="text-3xl font-bold text-secondary">
+                    Application Submitted!
+                  </h3>
+                  <p className="text-lg text-muted-foreground">
+                    Thank you for your application. Our operator will contact you within 2 hours.
+                  </p>
+                  <Button 
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setFormData({
+                        firstName: "",
+                        lastName: "",
+                        middleName: "",
+                        phone: "",
+                        email: "",
+                        age: "",
+                        hasOwnCar: "no",
+                        licenseFront: null,
+                        licenseBack: null
+                      });
+                    }}
+                    className="bg-primary hover:bg-primary/90 text-secondary"
+                  >
+                    Submit Another Application
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <h3 className="text-3xl font-bold text-center mb-2 text-secondary">
+                    Driver Application Form
+                  </h3>
+                  <p className="text-center text-muted-foreground mb-8">
+                    Fill out the form and we will contact you within 2 hours
+                  </p>
+                  <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name *</Label>
@@ -467,6 +481,8 @@ const Index = () => {
                   <Icon name="Send" className="ml-2" size={20} />
                 </Button>
               </form>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>
