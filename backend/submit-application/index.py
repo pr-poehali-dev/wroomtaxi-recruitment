@@ -49,6 +49,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         has_own_car = body_data.get('hasOwnCar') == 'yes'
         license_front_url = body_data.get('licenseFrontUrl', '')
         license_back_url = body_data.get('licenseBackUrl', '')
+        license_front_base64 = body_data.get('licenseFrontBase64', '')
+        license_back_base64 = body_data.get('licenseBackBase64', '')
         
         if not all([first_name, last_name, phone, email, age]):
             return {
@@ -103,25 +105,89 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 req = urllib.request.Request(telegram_url, data=data)
                 urllib.request.urlopen(req)
                 
-                # Send license photos
-                if license_front_url:
+                # Send license photos via Telegram
+                if license_front_base64:
+                    import io
+                    import base64
+                    
+                    # Remove data:image prefix if present
+                    if ',' in license_front_base64:
+                        license_front_base64 = license_front_base64.split(',')[1]
+                    
+                    front_image_data = base64.b64decode(license_front_base64)
+                    
+                    boundary = '----WebKitFormBoundary' + os.urandom(16).hex()
                     photo_url = f"https://api.telegram.org/bot{telegram_token}/sendPhoto"
-                    photo_data = urllib.parse.urlencode({
-                        'chat_id': telegram_chat_id,
-                        'photo': license_front_url,
-                        'caption': '📄 Водительские права (лицевая сторона)'
-                    }).encode('utf-8')
-                    photo_req = urllib.request.Request(photo_url, data=photo_data)
+                    
+                    body_parts = []
+                    body_parts.append(f'--{boundary}'.encode())
+                    body_parts.append(b'Content-Disposition: form-data; name="chat_id"')
+                    body_parts.append(b'')
+                    body_parts.append(telegram_chat_id.encode())
+                    
+                    body_parts.append(f'--{boundary}'.encode())
+                    body_parts.append(b'Content-Disposition: form-data; name="photo"; filename="license_front.jpg"')
+                    body_parts.append(b'Content-Type: image/jpeg')
+                    body_parts.append(b'')
+                    body_parts.append(front_image_data)
+                    
+                    body_parts.append(f'--{boundary}'.encode())
+                    body_parts.append(b'Content-Disposition: form-data; name="caption"')
+                    body_parts.append(b'')
+                    body_parts.append('📄 Водительские права (лицевая сторона)'.encode('utf-8'))
+                    
+                    body_parts.append(f'--{boundary}--'.encode())
+                    body_parts.append(b'')
+                    
+                    multipart_body = b'\r\n'.join(body_parts)
+                    
+                    photo_req = urllib.request.Request(
+                        photo_url,
+                        data=multipart_body,
+                        headers={'Content-Type': f'multipart/form-data; boundary={boundary}'}
+                    )
                     urllib.request.urlopen(photo_req)
                 
-                if license_back_url:
+                if license_back_base64:
+                    import io
+                    import base64
+                    
+                    # Remove data:image prefix if present
+                    if ',' in license_back_base64:
+                        license_back_base64 = license_back_base64.split(',')[1]
+                    
+                    back_image_data = base64.b64decode(license_back_base64)
+                    
+                    boundary = '----WebKitFormBoundary' + os.urandom(16).hex()
                     photo_url = f"https://api.telegram.org/bot{telegram_token}/sendPhoto"
-                    photo_data = urllib.parse.urlencode({
-                        'chat_id': telegram_chat_id,
-                        'photo': license_back_url,
-                        'caption': '📄 Водительские права (обратная сторона)'
-                    }).encode('utf-8')
-                    photo_req = urllib.request.Request(photo_url, data=photo_data)
+                    
+                    body_parts = []
+                    body_parts.append(f'--{boundary}'.encode())
+                    body_parts.append(b'Content-Disposition: form-data; name="chat_id"')
+                    body_parts.append(b'')
+                    body_parts.append(telegram_chat_id.encode())
+                    
+                    body_parts.append(f'--{boundary}'.encode())
+                    body_parts.append(b'Content-Disposition: form-data; name="photo"; filename="license_back.jpg"')
+                    body_parts.append(b'Content-Type: image/jpeg')
+                    body_parts.append(b'')
+                    body_parts.append(back_image_data)
+                    
+                    body_parts.append(f'--{boundary}'.encode())
+                    body_parts.append(b'Content-Disposition: form-data; name="caption"')
+                    body_parts.append(b'')
+                    body_parts.append('📄 Водительские права (обратная сторона)'.encode('utf-8'))
+                    
+                    body_parts.append(f'--{boundary}--'.encode())
+                    body_parts.append(b'')
+                    
+                    multipart_body = b'\r\n'.join(body_parts)
+                    
+                    photo_req = urllib.request.Request(
+                        photo_url,
+                        data=multipart_body,
+                        headers={'Content-Type': f'multipart/form-data; boundary={boundary}'}
+                    )
                     urllib.request.urlopen(photo_req)
         except Exception as telegram_error:
             pass

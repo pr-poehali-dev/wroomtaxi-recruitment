@@ -82,7 +82,9 @@ const Index = () => {
         body: JSON.stringify({
           ...formData,
           licenseFrontUrl: uploadData.frontUrl,
-          licenseBackUrl: uploadData.backUrl
+          licenseBackUrl: uploadData.backUrl,
+          licenseFrontBase64: frontBase64,
+          licenseBackBase64: backBase64
         }),
       });
       
