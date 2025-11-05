@@ -1,6 +1,8 @@
 import json
 import os
 import psycopg2
+import urllib.request
+import urllib.parse
 from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -73,6 +75,56 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         cursor.close()
         conn.close()
+        
+        # Send notification to Telegram
+        try:
+            telegram_token = os.environ.get('TELEGRAM_BOT_TOKEN')
+            telegram_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
+            
+            if telegram_token and telegram_chat_id:
+                car_status = "✅ Есть своя машина" if has_own_car else "❌ Нет своей машины"
+                
+                message = f"""🚖 <b>Новая заявка водителя #{application_id}</b>
+
+👤 <b>Имя:</b> {first_name} {middle_name} {last_name}
+📞 <b>Телефон:</b> {phone}
+✉️ <b>Email:</b> {email}
+🎂 <b>Возраст:</b> {age} лет
+🚗 <b>Машина:</b> {car_status}
+"""
+                
+                telegram_url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
+                data = urllib.parse.urlencode({
+                    'chat_id': telegram_chat_id,
+                    'text': message,
+                    'parse_mode': 'HTML'
+                }).encode('utf-8')
+                
+                req = urllib.request.Request(telegram_url, data=data)
+                urllib.request.urlopen(req)
+                
+                # Send license photos
+                if license_front_url:
+                    photo_url = f"https://api.telegram.org/bot{telegram_token}/sendPhoto"
+                    photo_data = urllib.parse.urlencode({
+                        'chat_id': telegram_chat_id,
+                        'photo': license_front_url,
+                        'caption': '📄 Водительские права (лицевая сторона)'
+                    }).encode('utf-8')
+                    photo_req = urllib.request.Request(photo_url, data=photo_data)
+                    urllib.request.urlopen(photo_req)
+                
+                if license_back_url:
+                    photo_url = f"https://api.telegram.org/bot{telegram_token}/sendPhoto"
+                    photo_data = urllib.parse.urlencode({
+                        'chat_id': telegram_chat_id,
+                        'photo': license_back_url,
+                        'caption': '📄 Водительские права (обратная сторона)'
+                    }).encode('utf-8')
+                    photo_req = urllib.request.Request(photo_url, data=photo_data)
+                    urllib.request.urlopen(photo_req)
+        except Exception as telegram_error:
+            pass
         
         return {
             'statusCode': 200,
