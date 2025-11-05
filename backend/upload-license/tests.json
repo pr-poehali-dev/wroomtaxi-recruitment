@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "Upload license photos",
+      "method": "POST",
+      "body": {
+        "licenseFront": "base64string",
+        "licenseBack": "base64string"
+      },
+      "expectedStatus": 200
+    }
+  ]
+}

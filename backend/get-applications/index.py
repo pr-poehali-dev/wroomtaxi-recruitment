@@ -45,13 +45,13 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         if status_filter:
             cursor.execute(
-                "SELECT id, first_name, last_name, middle_name, phone, email, age, has_own_car, document_url, created_at, status "
+                "SELECT id, first_name, last_name, middle_name, phone, email, age, has_own_car, license_front_url, license_back_url, created_at, status "
                 "FROM driver_applications WHERE status = %s ORDER BY created_at DESC",
                 (status_filter,)
             )
         else:
             cursor.execute(
-                "SELECT id, first_name, last_name, middle_name, phone, email, age, has_own_car, document_url, created_at, status "
+                "SELECT id, first_name, last_name, middle_name, phone, email, age, has_own_car, license_front_url, license_back_url, created_at, status "
                 "FROM driver_applications ORDER BY created_at DESC"
             )
         
@@ -68,9 +68,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'email': row[5],
                 'age': row[6],
                 'hasOwnCar': row[7],
-                'documentUrl': row[8],
-                'createdAt': row[9].isoformat() if row[9] else None,
-                'status': row[10]
+                'licenseFrontUrl': row[8],
+                'licenseBackUrl': row[9],
+                'createdAt': row[10].isoformat() if row[10] else None,
+                'status': row[11]
             })
         
         cursor.close()

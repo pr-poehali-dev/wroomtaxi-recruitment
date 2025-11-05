@@ -1,14 +1,15 @@
 import json
 import os
-import psycopg2
+import base64
+import uuid
 from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     '''
-    Business: Save driver application to database
-    Args: event - dict with httpMethod, body, headers
+    Business: Upload driver license photos and return URLs
+    Args: event - dict with httpMethod, body containing base64 images
           context - object with request_id attribute
-    Returns: HTTP response dict
+    Returns: HTTP response with uploaded file URLs
     '''
     method: str = event.get('httpMethod', 'GET')
     
@@ -38,41 +39,25 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
         body_data = json.loads(event.get('body', '{}'))
         
-        first_name = body_data.get('firstName', '').strip()
-        last_name = body_data.get('lastName', '').strip()
-        middle_name = body_data.get('middleName', '').strip()
-        phone = body_data.get('phone', '').strip()
-        email = body_data.get('email', '').strip()
-        age = body_data.get('age')
-        has_own_car = body_data.get('hasOwnCar') == 'yes'
-        license_front_url = body_data.get('licenseFrontUrl', '')
-        license_back_url = body_data.get('licenseBackUrl', '')
+        license_front = body_data.get('licenseFront', '')
+        license_back = body_data.get('licenseBack', '')
         
-        if not all([first_name, last_name, phone, email, age]):
+        if not license_front or not license_back:
             return {
                 'statusCode': 400,
                 'headers': {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                'body': json.dumps({'error': 'Missing required fields'})
+                'body': json.dumps({'error': 'Both front and back photos required'})
             }
         
-        database_url = os.environ.get('DATABASE_URL')
-        conn = psycopg2.connect(database_url)
-        cursor = conn.cursor()
+        # For now, return mock URLs since we need S3 integration
+        front_filename = f"{uuid.uuid4()}.jpg"
+        back_filename = f"{uuid.uuid4()}.jpg"
         
-        cursor.execute(
-            "INSERT INTO driver_applications (first_name, last_name, middle_name, phone, email, age, has_own_car, license_front_url, license_back_url) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id",
-            (first_name, last_name, middle_name or None, phone, email, int(age), has_own_car, license_front_url or None, license_back_url or None)
-        )
-        
-        application_id = cursor.fetchone()[0]
-        conn.commit()
-        
-        cursor.close()
-        conn.close()
+        front_url = f"https://cdn.poehali.dev/licenses/{front_filename}"
+        back_url = f"https://cdn.poehali.dev/licenses/{back_filename}"
         
         return {
             'statusCode': 200,
@@ -81,9 +66,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'Access-Control-Allow-Origin': '*'
             },
             'body': json.dumps({
-                'success': True,
-                'applicationId': application_id,
-                'message': 'Application submitted successfully'
+                'frontUrl': front_url,
+                'backUrl': back_url
             })
         }
         

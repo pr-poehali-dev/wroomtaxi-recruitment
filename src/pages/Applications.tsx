@@ -13,7 +13,8 @@ interface Application {
   email: string;
   age: number;
   hasOwnCar: boolean;
-  documentUrl: string | null;
+  licenseFrontUrl: string | null;
+  licenseBackUrl: string | null;
   createdAt: string;
   status: string;
 }
@@ -168,25 +169,61 @@ const Applications = () => {
                         </div>
                       </div>
                       
-                      {app.documentUrl && (
-                        <div className="flex items-center gap-3">
-                          <Icon name="FileText" size={20} className="text-primary" />
-                          <div>
-                            <p className="text-sm text-muted-foreground">Document</p>
-                            <a 
-                              href={app.documentUrl} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="font-semibold hover:text-primary flex items-center gap-1"
-                            >
-                              View Document
-                              <Icon name="ExternalLink" size={16} />
-                            </a>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
+                  
+                  {(app.licenseFrontUrl || app.licenseBackUrl) && (
+                    <div className="mt-6 pt-6 border-t">
+                      <h4 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                        <Icon name="CreditCard" size={20} className="text-primary" />
+                        Driver's License Photos
+                      </h4>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {app.licenseFrontUrl && (
+                          <div>
+                            <p className="text-sm text-muted-foreground mb-2 font-semibold">Front Side</p>
+                            <a 
+                              href={app.licenseFrontUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="block border-2 border-primary/20 rounded-lg overflow-hidden hover:border-primary transition-colors"
+                            >
+                              <img 
+                                src={app.licenseFrontUrl} 
+                                alt="License Front" 
+                                className="w-full h-48 object-cover"
+                              />
+                              <div className="bg-primary/5 p-2 text-center text-sm flex items-center justify-center gap-2">
+                                <Icon name="ZoomIn" size={16} />
+                                Click to view full size
+                              </div>
+                            </a>
+                          </div>
+                        )}
+                        {app.licenseBackUrl && (
+                          <div>
+                            <p className="text-sm text-muted-foreground mb-2 font-semibold">Back Side</p>
+                            <a 
+                              href={app.licenseBackUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="block border-2 border-primary/20 rounded-lg overflow-hidden hover:border-primary transition-colors"
+                            >
+                              <img 
+                                src={app.licenseBackUrl} 
+                                alt="License Back" 
+                                className="w-full h-48 object-cover"
+                              />
+                              <div className="bg-primary/5 p-2 text-center text-sm flex items-center justify-center gap-2">
+                                <Icon name="ZoomIn" size={16} />
+                                Click to view full size
+                              </div>
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   
                   <div className="mt-6 pt-6 border-t flex gap-3">
                     <Button className="flex-1 bg-primary hover:bg-primary/90">

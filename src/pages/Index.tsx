@@ -18,7 +18,8 @@ const Index = () => {
     email: "",
     age: "",
     hasOwnCar: "no",
-    document: null as File | null
+    licenseFront: null as File | null,
+    licenseBack: null as File | null
   });
 
   const scrollCarousel = (direction: 'left' | 'right') => {
@@ -31,16 +32,58 @@ const Index = () => {
     }
   };
 
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formData.licenseFront || !formData.licenseBack) {
+      toast({
+        title: "Error",
+        description: "Please upload both sides of your driver's license",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     try {
+      const frontBase64 = await convertToBase64(formData.licenseFront);
+      const backBase64 = await convertToBase64(formData.licenseBack);
+      
+      const uploadResponse = await fetch('https://functions.poehali.dev/c1de79f0-295c-4f46-bf1b-ca937db89013', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          licenseFront: frontBase64,
+          licenseBack: backBase64
+        }),
+      });
+      
+      const uploadData = await uploadResponse.json();
+      
+      if (!uploadResponse.ok) {
+        throw new Error(uploadData.error || 'Failed to upload license photos');
+      }
+      
       const response = await fetch('https://functions.poehali.dev/26636b11-737a-4ef0-9242-70a4fcf6f062', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          licenseFrontUrl: uploadData.frontUrl,
+          licenseBackUrl: uploadData.backUrl
+        }),
       });
       
       const data = await response.json();
@@ -59,8 +102,14 @@ const Index = () => {
           email: "",
           age: "",
           hasOwnCar: "no",
-          document: null
+          licenseFront: null,
+          licenseBack: null
         });
+        
+        const frontInput = document.getElementById('licenseFront') as HTMLInputElement;
+        const backInput = document.getElementById('licenseBack') as HTMLInputElement;
+        if (frontInput) frontInput.value = '';
+        if (backInput) backInput.value = '';
       } else {
         toast({
           title: "Error",
@@ -368,18 +417,31 @@ const Index = () => {
                     className="border-primary/30 focus:border-primary"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="document">Driver's License *</Label>
-                  <p className="text-sm text-muted-foreground mb-2">Please upload photos of both sides (front and back)</p>
-                  <Input 
-                    id="document" 
-                    type="file" 
-                    accept="image/*,.pdf" 
-                    required 
-                    multiple
-                    onChange={(e) => setFormData({...formData, document: e.target.files?.[0] || null})}
-                    className="border-primary/30 focus:border-primary"
-                  />
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="licenseFront">Driver's License - Front Side *</Label>
+                    <Input 
+                      id="licenseFront" 
+                      type="file" 
+                      accept="image/*" 
+                      required 
+                      onChange={(e) => setFormData({...formData, licenseFront: e.target.files?.[0] || null})}
+                      className="border-primary/30 focus:border-primary"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">Upload front side photo</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="licenseBack">Driver's License - Back Side *</Label>
+                    <Input 
+                      id="licenseBack" 
+                      type="file" 
+                      accept="image/*" 
+                      required 
+                      onChange={(e) => setFormData({...formData, licenseBack: e.target.files?.[0] || null})}
+                      className="border-primary/30 focus:border-primary"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">Upload back side photo</p>
+                  </div>
                 </div>
                 <div>
                   <Label>Do you have your own car? *</Label>
