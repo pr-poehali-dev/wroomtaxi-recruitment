@@ -435,27 +435,49 @@ const Index = () => {
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="licenseFront">Driver's License - Front Side *</Label>
-                    <Input 
-                      id="licenseFront" 
-                      type="file" 
-                      accept="image/*" 
-                      required 
-                      onChange={(e) => setFormData({...formData, licenseFront: e.target.files?.[0] || null})}
-                      className="border-primary/30 focus:border-primary"
-                    />
+                    <Label>Driver's License - Front Side *</Label>
+                    <div className="relative">
+                      <input 
+                        id="licenseFront" 
+                        type="file" 
+                        accept="image/*" 
+                        required 
+                        onChange={(e) => setFormData({...formData, licenseFront: e.target.files?.[0] || null})}
+                        className="hidden"
+                      />
+                      <label 
+                        htmlFor="licenseFront" 
+                        className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-primary/30 rounded-md cursor-pointer hover:bg-primary/5 transition-colors"
+                      >
+                        <Icon name="Upload" size={18} />
+                        <span className="text-sm">
+                          {formData.licenseFront ? formData.licenseFront.name : "Choose file"}
+                        </span>
+                      </label>
+                    </div>
                     <p className="text-xs text-muted-foreground mt-1">Upload front side photo</p>
                   </div>
                   <div>
-                    <Label htmlFor="licenseBack">Driver's License - Back Side *</Label>
-                    <Input 
-                      id="licenseBack" 
-                      type="file" 
-                      accept="image/*" 
-                      required 
-                      onChange={(e) => setFormData({...formData, licenseBack: e.target.files?.[0] || null})}
-                      className="border-primary/30 focus:border-primary"
-                    />
+                    <Label>Driver's License - Back Side *</Label>
+                    <div className="relative">
+                      <input 
+                        id="licenseBack" 
+                        type="file" 
+                        accept="image/*" 
+                        required 
+                        onChange={(e) => setFormData({...formData, licenseBack: e.target.files?.[0] || null})}
+                        className="hidden"
+                      />
+                      <label 
+                        htmlFor="licenseBack" 
+                        className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-primary/30 rounded-md cursor-pointer hover:bg-primary/5 transition-colors"
+                      >
+                        <Icon name="Upload" size={18} />
+                        <span className="text-sm">
+                          {formData.licenseBack ? formData.licenseBack.name : "Choose file"}
+                        </span>
+                      </label>
+                    </div>
                     <p className="text-xs text-muted-foreground mt-1">Upload back side photo</p>
                   </div>
                 </div>
