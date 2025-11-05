@@ -11,6 +11,8 @@ const Index = () => {
   const { toast } = useToast();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(true);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -45,6 +47,15 @@ const Index = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!canSubmit || isSubmitting) {
+      toast({
+        title: "Please wait",
+        description: "Please wait a few seconds before submitting again",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     if (!formData.licenseFront || !formData.licenseBack) {
       toast({
         title: "Error",
@@ -53,6 +64,8 @@ const Index = () => {
       });
       return;
     }
+    
+    setIsSubmitting(true);
     
     try {
       const frontBase64 = await convertToBase64(formData.licenseFront);
@@ -92,7 +105,15 @@ const Index = () => {
       const data = await response.json();
       
       if (response.ok && data.success) {
-        setIsSubmitted(true);
+        setCanSubmit(false);
+        setTimeout(() => {
+          setIsSubmitted(true);
+          setIsSubmitting(false);
+        }, 500);
+        
+        setTimeout(() => {
+          setCanSubmit(true);
+        }, 5000);
       } else {
         toast({
           title: "Error",
@@ -101,6 +122,7 @@ const Index = () => {
         });
       }
     } catch (error) {
+      setIsSubmitting(false);
       toast({
         title: "Error",
         description: "Failed to submit application. Please try again.",
@@ -498,9 +520,22 @@ const Index = () => {
                     </div>
                   </RadioGroup>
                 </div>
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-secondary text-lg py-6">
-                  Submit Application
-                  <Icon name="Send" className="ml-2" size={20} />
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting || !canSubmit}
+                  className="w-full bg-primary hover:bg-primary/90 active:bg-primary/80 active:translate-y-1 text-secondary text-lg py-6 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Icon name="Loader2" className="mr-2 animate-spin" size={20} />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      Submit Application
+                      <Icon name="Send" className="ml-2" size={20} />
+                    </>
+                  )}
                 </Button>
               </form>
                 </>
