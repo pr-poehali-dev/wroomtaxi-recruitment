@@ -84,7 +84,10 @@ const Index = () => {
     { name: "Maruti Suzuki Alto 800", image: "https://cdn.poehali.dev/files/7ca5a0ab-f576-40ed-bbc5-00850aaf22c2.png" },
     { name: "Hyundai Santro", image: "https://cdn.poehali.dev/files/fa0174ba-2a1f-4d1e-8ed1-037aaa82abb8.png" },
     { name: "Tata Tiago", image: "https://cdn.poehali.dev/files/f5e2156b-a68a-4314-bac9-66f8f8379893.png" },
-    { name: "Maruti Suzuki Dzire", image: "https://cdn.poehali.dev/files/7b1565b0-ee78-40a2-93bc-2ec234828f24.png" }
+    { name: "Maruti Suzire", image: "https://cdn.poehali.dev/files/7b1565b0-ee78-40a2-93bc-2ec234828f24.png" },
+    { name: "Maruti Ertiga", image: "https://cdn.poehali.dev/files/da831f52-7170-46fc-88fb-b211c8c2b6ef.png" },
+    { name: "Hyundai Aura", image: "https://cdn.poehali.dev/files/85d087ba-1ee3-4bf0-a8de-f802972b812a.png" },
+    { name: "Toyota Innova Crysta", image: "https://cdn.poehali.dev/files/20658303-d323-4123-af52-f3f044ab4de5.png" }
   ];
 
   return (
