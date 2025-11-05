@@ -23,48 +23,48 @@ const Index = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Заявка отправлена!",
-      description: "Мы свяжемся с вами в ближайшее время.",
+      title: "Application submitted!",
+      description: "We will contact you shortly.",
     });
   };
 
   const stats = [
-    { value: "5,000+", label: "Активных водителей", icon: "Users" },
-    { value: "250,000+", label: "Довольных клиентов", icon: "Heart" },
-    { value: "8+", label: "Лет на рынке", icon: "Calendar" },
-    { value: "15", label: "Городов Индии", icon: "MapPin" }
+    { value: "5,000+", label: "Active Drivers", icon: "Users" },
+    { value: "250,000+", label: "Happy Customers", icon: "Heart" },
+    { value: "8+", label: "Years in Business", icon: "Calendar" },
+    { value: "15", label: "Indian Cities", icon: "MapPin" }
   ];
 
   const benefits = [
     {
       icon: "Zap",
-      title: "Начните зарабатывать сегодня",
-      description: "Пройдите регистрацию утром — начните работу вечером"
+      title: "Start Earning Today",
+      description: "Register in the morning — start working in the evening"
     },
     {
       icon: "UserCheck",
-      title: "Простое оформление",
-      description: "Минимум документов, быстрая проверка за 2 часа"
+      title: "Easy Registration",
+      description: "Minimum documents, quick verification in 2 hours"
     },
     {
       icon: "Car",
-      title: "Аренда автомобиля",
-      description: "Предоставляем качественные автомобили по выгодным условиям"
+      title: "Car Rental Available",
+      description: "We provide quality vehicles at competitive rates"
     },
     {
       icon: "TrendingUp",
-      title: "Высокий доход",
-      description: "Зарабатывайте до ₹50,000 в месяц"
+      title: "High Income",
+      description: "Earn up to ₹50,000 per month"
     },
     {
       icon: "Clock",
-      title: "Гибкий график",
-      description: "Работайте когда удобно вам"
+      title: "Flexible Schedule",
+      description: "Work whenever it suits you"
     },
     {
       icon: "Shield",
-      title: "Полная поддержка",
-      description: "24/7 служба поддержки водителей"
+      title: "Full Support",
+      description: "24/7 driver support service"
     }
   ];
 
@@ -97,7 +97,7 @@ const Index = () => {
           </div>
           <Button size="lg" className="bg-primary hover:bg-primary/90 text-secondary">
             <Icon name="Phone" className="mr-2" size={20} />
-            Позвонить
+            Call Us
           </Button>
         </div>
       </header>
@@ -111,18 +111,18 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="text-white space-y-6">
               <h2 className="text-5xl md:text-6xl font-bold leading-tight">
-                Станьте водителем <span className="text-primary">WroomTaxi</span>
+                Become a <span className="text-primary">WroomTaxi</span> Driver
               </h2>
               <p className="text-xl text-white/90">
-                Зарабатывайте до ₹50,000 в месяц с гибким графиком работы. 
-                Начните уже сегодня!
+                Earn up to ₹50,000 per month with flexible working hours. 
+                Start today!
               </p>
               <Button 
                 size="lg" 
                 className="bg-primary hover:bg-primary/90 text-secondary text-lg px-8 py-6"
                 onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                Оставить заявку
+                Apply Now
                 <Icon name="ArrowRight" className="ml-2" size={24} />
               </Button>
             </div>
@@ -156,10 +156,10 @@ const Index = () => {
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
           <h3 className="text-4xl font-bold text-center mb-4 text-secondary">
-            Почему выбирают <span className="text-primary">WroomTaxi</span>?
+            Why Choose <span className="text-primary">WroomTaxi</span>?
           </h3>
           <p className="text-center text-muted-foreground mb-12 text-lg">
-            Лучшие условия для водителей в Индии
+            Best conditions for drivers in India
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             {benefits.map((benefit, index) => (
@@ -180,10 +180,10 @@ const Index = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h3 className="text-4xl font-bold text-center mb-4 text-secondary">
-            Предоставляем в аренду для работы
+            Available for Rent
           </h3>
           <p className="text-center text-muted-foreground mb-12 text-lg">
-            Выберите автомобиль по вашим предпочтениям
+            Choose a vehicle that suits your preferences
           </p>
           <div className="relative">
             <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
@@ -211,15 +211,15 @@ const Index = () => {
           <Card className="shadow-2xl border-primary/20">
             <CardContent className="pt-6">
               <h3 className="text-3xl font-bold text-center mb-2 text-secondary">
-                Заявка на трудоустройство
+                Driver Application Form
               </h3>
               <p className="text-center text-muted-foreground mb-8">
-                Заполните форму и мы свяжемся с вами в течение 2 часов
+                Fill out the form and we will contact you within 2 hours
               </p>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="firstName">Имя *</Label>
+                    <Label htmlFor="firstName">First Name *</Label>
                     <Input 
                       id="firstName" 
                       required 
@@ -229,7 +229,7 @@ const Index = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="lastName">Фамилия *</Label>
+                    <Label htmlFor="lastName">Last Name *</Label>
                     <Input 
                       id="lastName" 
                       required 
@@ -240,7 +240,7 @@ const Index = () => {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="middleName">Отчество</Label>
+                  <Label htmlFor="middleName">Middle Name</Label>
                   <Input 
                     id="middleName" 
                     value={formData.middleName}
@@ -250,7 +250,7 @@ const Index = () => {
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="phone">Номер телефона *</Label>
+                    <Label htmlFor="phone">Phone Number *</Label>
                     <Input 
                       id="phone" 
                       type="tel" 
@@ -262,7 +262,7 @@ const Index = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="age">Возраст *</Label>
+                    <Label htmlFor="age">Age *</Label>
                     <Input 
                       id="age" 
                       type="number" 
@@ -287,7 +287,7 @@ const Index = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="document">Скан паспорта *</Label>
+                  <Label htmlFor="document">Passport Scan *</Label>
                   <Input 
                     id="document" 
                     type="file" 
@@ -298,7 +298,7 @@ const Index = () => {
                   />
                 </div>
                 <div>
-                  <Label>Есть ли своя машина? *</Label>
+                  <Label>Do you have your own car? *</Label>
                   <RadioGroup 
                     value={formData.hasOwnCar} 
                     onValueChange={(value) => setFormData({...formData, hasOwnCar: value})}
@@ -306,16 +306,16 @@ const Index = () => {
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="yes" id="yes" />
-                      <Label htmlFor="yes" className="cursor-pointer">Да</Label>
+                      <Label htmlFor="yes" className="cursor-pointer">Yes</Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="no" id="no" />
-                      <Label htmlFor="no" className="cursor-pointer">Нет</Label>
+                      <Label htmlFor="no" className="cursor-pointer">No</Label>
                     </div>
                   </RadioGroup>
                 </div>
                 <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-secondary text-lg py-6">
-                  Отправить заявку
+                  Submit Application
                   <Icon name="Send" className="ml-2" size={20} />
                 </Button>
               </form>
@@ -330,11 +330,11 @@ const Index = () => {
             <div>
               <h4 className="text-xl font-bold mb-4 text-primary">WroomTaxi</h4>
               <p className="text-white/80">
-                Ведущая компания такси в Индии с 2016 года
+                Leading taxi company in India since 2016
               </p>
             </div>
             <div>
-              <h5 className="font-bold mb-4">Контакты</h5>
+              <h5 className="font-bold mb-4">Contact</h5>
               <div className="space-y-2 text-white/80">
                 <p className="flex items-center gap-2">
                   <Icon name="Phone" size={16} />
@@ -347,15 +347,15 @@ const Index = () => {
               </div>
             </div>
             <div>
-              <h5 className="font-bold mb-4">Офис</h5>
+              <h5 className="font-bold mb-4">Office</h5>
               <p className="text-white/80">
                 123, MG Road<br />
                 Mumbai, Maharashtra<br />
-                400001, Индия
+                400001, India
               </p>
             </div>
             <div>
-              <h5 className="font-bold mb-4">Города присутствия</h5>
+              <h5 className="font-bold mb-4">Operating Cities</h5>
               <div className="text-white/80 space-y-1">
                 <p>Mumbai • Delhi • Bangalore</p>
                 <p>Chennai • Hyderabad • Pune</p>
@@ -366,7 +366,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-white/20 mt-12 pt-8 text-center text-white/60">
-            <p>&copy; 2024 WroomTaxi. Все права защищены.</p>
+            <p>&copy; 2024 WroomTaxi. All rights reserved.</p>
           </div>
         </div>
       </footer>
