@@ -144,7 +144,7 @@ const Index = () => {
             </div>
           </div>
           <div className="mt-12 text-center">
-            <p className="text-2xl md:text-3xl font-bold text-white">
+            <p className="text-3xl md:text-4xl font-extrabold text-white drop-shadow-lg">
               Submit your application and our operator will contact you within 2 hours
             </p>
           </div>
@@ -235,6 +235,13 @@ const Index = () => {
             >
               <Icon name="ChevronRight" size={24} />
             </Button>
+          </div>
+          <div className="mt-16 text-center">
+            <div className="bg-primary/20 border-4 border-primary rounded-2xl p-8 max-w-4xl mx-auto">
+              <p className="text-2xl md:text-3xl font-extrabold text-secondary">
+                If you don't have a car and can't rent one, our company will provide you a vehicle to work with FOR FREE!
+              </p>
+            </div>
           </div>
         </div>
       </section>
