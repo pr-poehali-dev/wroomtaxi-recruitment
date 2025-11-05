@@ -104,7 +104,11 @@ const Index = () => {
               Wroom<span className="text-primary">Taxi</span>
             </h1>
           </div>
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-secondary">
+          <Button 
+            size="lg" 
+            className="bg-primary hover:bg-primary/90 text-secondary"
+            onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
+          >
             <Icon name="Phone" className="mr-2" size={20} />
             Call Us
           </Button>
