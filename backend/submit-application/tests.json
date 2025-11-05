@@ -1,0 +1,40 @@
+{
+  "tests": [
+    {
+      "name": "Submit valid driver application",
+      "method": "POST",
+      "body": {
+        "firstName": "Rajesh",
+        "lastName": "Kumar",
+        "middleName": "Singh",
+        "phone": "+919876543210",
+        "email": "rajesh@example.com",
+        "age": "28",
+        "hasOwnCar": "yes",
+        "documentUrl": ""
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Submit application without car",
+      "method": "POST",
+      "body": {
+        "firstName": "Amit",
+        "lastName": "Patel",
+        "phone": "+919123456789",
+        "email": "amit@example.com",
+        "age": "32",
+        "hasOwnCar": "no"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

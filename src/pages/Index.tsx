@@ -31,12 +31,50 @@ const Index = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Application submitted!",
-      description: "We will contact you shortly.",
-    });
+    
+    try {
+      const response = await fetch('https://functions.poehali.dev/26636b11-737a-4ef0-9242-70a4fcf6f062', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        toast({
+          title: "Application submitted!",
+          description: "We will contact you shortly.",
+        });
+        
+        setFormData({
+          firstName: "",
+          lastName: "",
+          middleName: "",
+          phone: "",
+          email: "",
+          age: "",
+          hasOwnCar: "no",
+          document: null
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to submit application",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit application. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const stats = [
