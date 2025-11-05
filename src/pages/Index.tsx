@@ -80,16 +80,11 @@ const Index = () => {
   ];
 
   const cars = [
-    { name: "Tata Indica / Indica Vista", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Maruti Suzuki Alto 800 / Wagon R", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Hyundai Santro / Eon", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Tata Tiago / Maruti Celerio", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Maruti Suzuki Dzire", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Toyota Etios / Etios Liva", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Honda Amaze", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Hyundai Aura / Xcent", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Maruti Ertiga", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" },
-    { name: "Toyota Innova Crysta", image: "https://cdn.poehali.dev/projects/b267464d-47a3-4f81-91d7-a73e9e72c75d/files/d4a9671c-de2d-49ea-a299-06d0cfa814f4.jpg" }
+    { name: "Tata Indica / Indica Vista", image: "https://cdn.poehali.dev/files/a63e29d0-2503-4883-b7c8-9be376401167.png" },
+    { name: "Maruti Suzuki Alto 800", image: "https://cdn.poehali.dev/files/7ca5a0ab-f576-40ed-bbc5-00850aaf22c2.png" },
+    { name: "Hyundai Santro", image: "https://cdn.poehali.dev/files/fa0174ba-2a1f-4d1e-8ed1-037aaa82abb8.png" },
+    { name: "Tata Tiago", image: "https://cdn.poehali.dev/files/f5e2156b-a68a-4314-bac9-66f8f8379893.png" },
+    { name: "Maruti Suzuki Dzire", image: "https://cdn.poehali.dev/files/7b1565b0-ee78-40a2-93bc-2ec234828f24.png" }
   ];
 
   return (
